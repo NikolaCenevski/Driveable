@@ -1,0 +1,35 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>
+<!--      <img src="assets/delivery.png" class="logo">-->
+      Deliverable
+    </span>
+
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+      <mat-chip-list *ngIf="!isLoggedIn()">
+        <a routerLink="/register">
+          <mat-chip color="accent" selected>
+            Register
+          </mat-chip>
+        </a>
+        <a routerLink="/login">
+          <mat-chip>
+            Log in
+          </mat-chip>
+        </a>
+      </mat-chip-list>
+
+      <mat-chip-list *ngIf="isLoggedIn()">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="signOut()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Log out</span>
+          </button>
+        </mat-menu>
+      </mat-chip-list>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
