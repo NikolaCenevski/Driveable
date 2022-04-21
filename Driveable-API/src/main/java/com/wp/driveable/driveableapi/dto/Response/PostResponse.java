@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,6 +15,8 @@ public class PostResponse{
     private String title;
     private String description;
     private int horsepower;
+    private int mileage;
+    private LocalDate date;
     private String manufacturingYear;
     private int price;
     private String name;

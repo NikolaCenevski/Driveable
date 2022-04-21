@@ -42,6 +42,8 @@ public class ReportPostService {
         reportPostResponse.setId(reportPost.getId());
         reportPostResponse.setCar(post.getCar());
         reportPostResponse.setColor(post.getColor());
+        reportPostResponse.setMileage(post.getMileage());
+        reportPostResponse.setDate(post.getDate());
         reportPostResponse.setDescription(post.getDescription());
         reportPostResponse.setHorsepower(post.getHorsepower());
         reportPostResponse.setTitle(post.getTitle());

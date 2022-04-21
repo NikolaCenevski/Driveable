@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +23,9 @@ public class Post {
     private List<Byte[]> images;
     @ManyToOne
     private User creator;
+    private LocalDate date;
     private int horsepower;
+    private int mileage;
     private String manufacturingYear;
     private int price;
     private Boolean isNew;

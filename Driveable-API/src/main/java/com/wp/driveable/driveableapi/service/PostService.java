@@ -7,6 +7,7 @@ import com.wp.driveable.driveableapi.entity.Post;
 import com.wp.driveable.driveableapi.entity.User;
 import com.wp.driveable.driveableapi.repository.CarRepository;
 import com.wp.driveable.driveableapi.repository.PostRepository;
+import com.wp.driveable.driveableapi.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,11 @@ import java.util.stream.Collectors;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
     private final CarService carService;
-    public PostService(PostRepository postRepository, CarRepository carRepository, CarService carService) {
+    public PostService(PostRepository postRepository, CarRepository carRepository, UserRepository userRepository, CarService carService) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
 
         this.carService = carService;
     }
@@ -53,6 +56,8 @@ public class PostService {
         postResponse.setId(post.getId());
         postResponse.setCar(post.getCar());
         postResponse.setColor(post.getColor());
+        postResponse.setMileage(post.getMileage());
+        postResponse.setDate(post.getDate());
         postResponse.setDescription(post.getDescription());
         postResponse.setTitle(post.getTitle());
         postResponse.setHorsepower(post.getHorsepower());
@@ -79,7 +84,10 @@ public class PostService {
     public List<PostResponse> getAllPostsByUser() {
        return postRepository.getAllByCreator((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).stream().map(this::mapToPostResponse).collect(Collectors.toList());
     }
-
+    public List<PostResponse> getAllPostsByUser(long id)
+    {
+        return postRepository.getAllByCreator(userRepository.getById(id)).stream().map(this::mapToPostResponse).collect(Collectors.toList());
+    }
     public void editPrice(int price,long id) {
         User user=(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Post post=postRepository.getById(id);

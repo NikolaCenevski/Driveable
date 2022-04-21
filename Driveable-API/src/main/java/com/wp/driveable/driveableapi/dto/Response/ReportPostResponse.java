@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -18,6 +19,8 @@ public class ReportPostResponse {
     private int horsepower;
     private String manufacturingYear;
     private int price;
+    private int mileage;
+    private LocalDate date;
     private String name;
     private String surname;
     private String phoneNumber;
