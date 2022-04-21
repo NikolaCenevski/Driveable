@@ -29,7 +29,7 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
             ).getPrincipal();
             String token=jwtUtil.generateToken(authRequest.getUserName());
-        return ResponseEntity.ok(new JwtResponse(token,user.getId(),user.getUsername(),user.getEmail()));
+        return ResponseEntity.ok(new JwtResponse(token,user.getId(),user.getName(),user.getSurname(),user.getUsername(),user.getEmail(),user.getUserRole()));
     }
     @PostMapping("/register")
     public void registerUser(@RequestBody RegisterRequest registerRequest) throws Exception {

@@ -19,7 +19,7 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String description;
     @ElementCollection
-    private List<String> images;
+    private List<Byte[]> images;
     @ManyToOne
     private User creator;
     private int horsepower;

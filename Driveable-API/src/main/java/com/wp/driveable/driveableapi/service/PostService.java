@@ -41,14 +41,16 @@ public class PostService {
        post.setCarType(postRequest.getCarType());
        post.setIsNew(postRequest.getIsNew());
        post.setManufacturingYear(postRequest.getManufacturingYear());
+       post.setImages(postRequest.getImages());
        postRepository.save(post);
 
 
     }
 
-    private PostResponse mapToPostResponse(Post post)
+    public PostResponse mapToPostResponse(Post post)
     {
         PostResponse postResponse= new PostResponse();
+        postResponse.setId(post.getId());
         postResponse.setCar(post.getCar());
         postResponse.setColor(post.getColor());
         postResponse.setDescription(post.getDescription());
@@ -61,6 +63,7 @@ public class PostService {
         postResponse.setName(post.getCreator().getName());
         postResponse.setSurname(post.getCreator().getSurname());
         postResponse.setPhoneNumber(post.getCreator().getPhoneNumber());
+        postResponse.setNumOfImages(post.getImages().size());
         return postResponse;
     }
 

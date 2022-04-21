@@ -16,7 +16,7 @@ public class ReportPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Reason> reasons=new ArrayList<>();
     @OneToOne
     private Post post;

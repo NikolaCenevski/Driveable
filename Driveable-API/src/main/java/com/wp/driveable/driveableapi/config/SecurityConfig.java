@@ -1,5 +1,6 @@
 package com.wp.driveable.driveableapi.config;
 
+import com.wp.driveable.driveableapi.entity.UserRole;
 import com.wp.driveable.driveableapi.filter.JwtFilter;
 import com.wp.driveable.driveableapi.service.UserService;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests().antMatchers(publicMatchers)
-                .permitAll().anyRequest().authenticated()
+                .permitAll()
+                .antMatchers("/api/moderator/**").hasAuthority(UserRole.MODERATOR.name()).anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
