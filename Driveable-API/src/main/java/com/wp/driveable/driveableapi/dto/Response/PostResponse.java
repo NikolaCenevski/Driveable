@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PostResponse{
+public class PostResponse implements Response{
     private long id;
     private String title;
     private String description;

@@ -1,16 +1,22 @@
 package com.wp.driveable.driveableapi.controller;
 
+import com.wp.driveable.driveableapi.dto.Response.MessageResponse;
 import com.wp.driveable.driveableapi.dto.Response.PostResponse;
+import com.wp.driveable.driveableapi.dto.Response.Response;
 import com.wp.driveable.driveableapi.dto.requests.PostRequest;
+import com.wp.driveable.driveableapi.exceptions.NotFoundException;
 import com.wp.driveable.driveableapi.service.PostService;
 import com.wp.driveable.driveableapi.service.ReportPostService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
-public class PostController{
+public class PostController {
+
     private final PostService postService;
     private final ReportPostService reportPostService;
 
@@ -20,28 +26,39 @@ public class PostController{
     }
 
     @GetMapping
-    public List<PostResponse> getAllPosts()
-    {
+    public List<PostResponse> getAllPosts() {
         return postService.getAllPosts();
     }
+
     @GetMapping("/user/{id}")
-    public List<PostResponse> getAllPostsByUser(@PathVariable long id)
-    {
-        return postService.getAllPostsByUser(id);
+    public ResponseEntity<?> getAllPostsByUser(@PathVariable long id) {
+        try {
+            return ResponseEntity.ok(postService.getAllPostsByUser(id));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.NOT_FOUND);
+        }
     }
+
     @GetMapping("/{id}")
-    public PostResponse getPostById(@PathVariable long id)
-    {
-        return postService.getPostById(id);
+    public ResponseEntity<Response> getPostById(@PathVariable long id) {
+        try {
+            return ResponseEntity.ok(postService.getPostById(id));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.NOT_FOUND);
+        }
     }
+
     @PostMapping("/create")
-    public void createPost(@RequestBody PostRequest postRequest)
-    {
-        postService.createPost(postRequest);
+    public ResponseEntity<MessageResponse> createPost(@RequestBody PostRequest postRequest) {
+        return ResponseEntity.ok(postService.createPost(postRequest));
     }
+
     @PostMapping("/{id}/report")
-    public void reportPost(@PathVariable long id,@RequestBody String description)
-    {
-       reportPostService.reportPost(id,description);
+    public ResponseEntity<MessageResponse> reportPost(@PathVariable long id, @RequestBody String description) {
+        try {
+            return ResponseEntity.ok(reportPostService.reportPost(id, description));
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.NOT_FOUND);
+        }
     }
 }

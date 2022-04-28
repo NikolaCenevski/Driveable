@@ -1,5 +1,6 @@
 package com.wp.driveable.driveableapi.service;
 
+import com.wp.driveable.driveableapi.dto.Response.MessageResponse;
 import com.wp.driveable.driveableapi.dto.Response.PostResponse;
 import com.wp.driveable.driveableapi.dto.Response.ReasonResponse;
 import com.wp.driveable.driveableapi.dto.Response.ReportPostResponse;
@@ -7,13 +8,13 @@ import com.wp.driveable.driveableapi.entity.Post;
 import com.wp.driveable.driveableapi.entity.Reason;
 import com.wp.driveable.driveableapi.entity.ReportPost;
 import com.wp.driveable.driveableapi.entity.User;
+import com.wp.driveable.driveableapi.exceptions.NotFoundException;
 import com.wp.driveable.driveableapi.repository.PostRepository;
 import com.wp.driveable.driveableapi.repository.ReasonRepository;
 import com.wp.driveable.driveableapi.repository.ReportPostRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ public class ReportPostService {
     private final PostRepository postRepository;
     private final ReasonRepository reasonRepository;
     private final PostService postService;
+
     public ReportPostService(ReportPostRepository reportPostRepository, PostRepository postRepository, ReasonRepository reasonRepository, PostService postService) {
         this.reportPostRepository = reportPostRepository;
         this.postRepository = postRepository;
@@ -30,15 +32,16 @@ public class ReportPostService {
         this.postService = postService;
     }
 
-    public  ReportPostResponse getReportPostById(long id) {
+    public ReportPostResponse getReportPostById(long id) throws NotFoundException {
+        ReportPost reportPost = reportPostRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Report post not found"));
 
-        ReportPost reportPost=reportPostRepository.getById(id);
         return mapToReportPostResponse(reportPost);
     }
-    public ReportPostResponse mapToReportPostResponse(ReportPost reportPost)
-    {
-        ReportPostResponse reportPostResponse=new ReportPostResponse();
-        Post post=reportPost.getPost();
+
+    public ReportPostResponse mapToReportPostResponse(ReportPost reportPost) {
+        ReportPostResponse reportPostResponse = new ReportPostResponse();
+        Post post = reportPost.getPost();
         reportPostResponse.setId(reportPost.getId());
         reportPostResponse.setCar(post.getCar());
         reportPostResponse.setColor(post.getColor());
@@ -55,46 +58,61 @@ public class ReportPostService {
         reportPostResponse.setSurname(post.getCreator().getSurname());
         reportPostResponse.setPhoneNumber(post.getCreator().getPhoneNumber());
         reportPostResponse.setNumOfImages(post.getImages().size());
-        reportPostResponse.setReasons(reportPost.getReasons().stream().map(this::mapToReasonResponse).collect(Collectors.toList()));
+
+        reportPostResponse.setReasons(reportPost.getReasons().stream().
+                map(this::mapToReasonResponse)
+                .collect(Collectors.toList()));
+
         return reportPostResponse;
     }
-    public ReasonResponse mapToReasonResponse(Reason reason)
-    {
-        ReasonResponse reasonResponse=new ReasonResponse();
+
+    public ReasonResponse mapToReasonResponse(Reason reason) {
+        ReasonResponse reasonResponse = new ReasonResponse();
         reasonResponse.setDescription(reason.getDescription());
         reasonResponse.setName(reason.getUser().getName());
         reasonResponse.setSurname(reason.getUser().getSurname());
         return reasonResponse;
     }
 
-    public void reportPost(long id, String description) {
-        Post post=postRepository.getById(id);
-        ReportPost reportPost=reportPostRepository.findByPost(post);
-        Reason reason=new Reason();
+    public MessageResponse reportPost(long id, String description) throws NotFoundException {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Post not found"));
+
+        ReportPost reportPost = reportPostRepository.findByPost(post);
+        Reason reason = new Reason();
         reason.setDescription(description);
-        reason.setUser((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        reason.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         reasonRepository.save(reason);
-        if (reportPost==null)
-        {
-            reportPost=new ReportPost();
+        if (reportPost == null) {
+            reportPost = new ReportPost();
             reportPost.setPost(post);
         }
         reportPost.getReasons().add(reason);
         reportPostRepository.save(reportPost);
+        return new MessageResponse("Post reported");
     }
 
     public List<PostResponse> getAllPosts() {
-       return reportPostRepository.findAll().stream().map(post->postService.mapToPostResponse(post.getPost())).collect(Collectors.toList());
+        return reportPostRepository.findAll().stream()
+                .map(post -> postService.mapToPostResponse(post.getPost()))
+                .collect(Collectors.toList());
     }
 
-    public void approvePost(long id) {
-        ReportPost reportPost=reportPostRepository.getById(id);
+    public MessageResponse approvePost(long id) throws NotFoundException {
+        ReportPost reportPost = reportPostRepository.findById(id)
+                .orElseThrow(() ->  new NotFoundException("Post not found"));
+
         reportPostRepository.delete(reportPost);
+        return new MessageResponse("Post approved");
     }
-    public void deletePost(long id) {
-        ReportPost reportPost=reportPostRepository.getById(id);
-        Post post=reportPost.getPost();
+
+    public MessageResponse deletePost(long id) throws NotFoundException {
+        ReportPost reportPost = reportPostRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Post not found"));
+
+        Post post = reportPost.getPost();
         reportPostRepository.delete(reportPost);
         postRepository.delete(post);
+        return new MessageResponse("Post deleted");
     }
 }

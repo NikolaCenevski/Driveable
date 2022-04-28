@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReportPostResponse {
+public class ReportPostResponse implements Response {
     private long id;
     private String title;
     private String description;
