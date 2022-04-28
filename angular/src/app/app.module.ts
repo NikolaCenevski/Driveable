@@ -24,6 +24,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {MatChipsModule} from "@angular/material/chips";
 import { PostsComponent } from './components/posts/posts.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
     declarations: [
@@ -32,7 +33,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
         AuthComponent,
         LoginComponent,
         RegisterComponent,
-        PostsComponent
+        PostsComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -53,6 +54,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
         MatInputModule,
         MatChipsModule,
         MatSidenavModule,
+        MatSnackBarModule,
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}

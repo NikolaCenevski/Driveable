@@ -4,8 +4,24 @@ mat-drawer {
 
 mat-drawer-content {
   height: 90vh;
+  padding: 10px;
 }
 
 mat-card {
+  display: flex;
+  justify-content: start;
   margin-bottom: 5px;
+}
+
+.title-image {
+  margin: 30px;
+}
+
+.container {
+  width: 100%;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
 }

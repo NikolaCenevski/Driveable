@@ -16,5 +16,4 @@ public class DriveableApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(DriveableApiApplication.class, args);
     }
-
 }

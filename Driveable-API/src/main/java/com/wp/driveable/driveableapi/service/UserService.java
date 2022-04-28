@@ -3,6 +3,7 @@ package com.wp.driveable.driveableapi.service;
 import com.wp.driveable.driveableapi.dto.Response.MessageResponse;
 import com.wp.driveable.driveableapi.dto.requests.RegisterRequest;
 import com.wp.driveable.driveableapi.entity.User;
+import com.wp.driveable.driveableapi.entity.UserRole;
 import com.wp.driveable.driveableapi.exceptions.BadRequestException;
 import com.wp.driveable.driveableapi.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,6 +41,7 @@ public class UserService implements UserDetailsService {
         user.setName(registerRequest.getName());
         user.setSurname(registerRequest.getSurname());
         user.setPhoneNumber(registerRequest.getPhoneNumber());
+        user.setUserRole(UserRole.USER);
         userRepository.save(user);
         return new MessageResponse("User registered successfully");
     }

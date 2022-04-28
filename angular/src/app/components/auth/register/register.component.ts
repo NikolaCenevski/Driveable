@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {finalize} from "rxjs";
 import {AuthenticationService} from "../../../services/authentication.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Router} from "@angular/router";
+import {MessageService} from "../../../services/message.service";
 
 @Component({
     selector: 'app-register',
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private authenticationService: AuthenticationService,
-        private router: Router
+        private messageService: MessageService,
     ) {
     }
 
@@ -52,16 +52,17 @@ export class RegisterComponent implements OnInit {
             email,
             phoneNumber,
             name,
-            surname
-        ).pipe(
+            surname).pipe(
             finalize(() => {
                 this.loading = false;
             })
         ).subscribe({
-                next: (data) => {
-
-                }
+            next: (data) => {
+                this.messageService.showSuccessMessage(data.message)
+            },
+            error: err => {
+                this.messageService.showErrorMessage(err.error.message)
             }
-        );
+        });
     }
 }

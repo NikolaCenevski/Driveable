@@ -1,134 +1,23 @@
 <mat-drawer-container class="example-container">
-  <mat-drawer #drawer mode="side" opened>I'm a drawer</mat-drawer>
-  <mat-drawer-content style="padding: 10px">
-    <mat-card class="example-card" style="display: flex; justify-content: start;">
-      <div style="margin: 30px">
-        <img mat-card-xl-image src="https://scuffedentertainment.com/wp-content/uploads/2021/11/what-car-suits-you-best-quiz.jpg" >
+  <mat-drawer mode="side" opened>I'm a drawer</mat-drawer>
+  <mat-drawer-content>
+    <mat-card *ngFor="let post of posts; index as i">
+      <div class="title-image">
+        <img mat-card-xl-image [src]="images[i]" >
       </div>
-      <div style="width: 100%">
-        <div style="display: flex; justify-content: space-between;">
-          <p>Avtomobil</p>
-          <p>14.08.2000</p>
+      <div class="container">
+        <div class="top">
+          <p>{{post.isNew ? 'New' : 'Used'}}</p>
+          <p>{{post.date}}</p>
         </div>
-        <mat-card-title>Audi A6 3.0tdi V6 motor 232ps 171kw quattro</mat-card-title>
-        <mat-card-subtitle>7800 eur</mat-card-subtitle>
-        <p>Godina: 2007</p>
-        <p>Kilometraza: 200 000 - 249 999</p>
+        <mat-card-title>{{post.title}}</mat-card-title>
+        <mat-card-subtitle>{{post.price}} eur</mat-card-subtitle>
+        <p>Year: {{post.manufacturingYear}}</p>
+        <p>Mileage: {{post.mileage}}</p>
+        <p></p>
+        <p>Horse power: {{post.horsepower}}</p>
         <button mat-raised-button color="primary">Open</button>
       </div>
     </mat-card>
-    <mat-card class="example-card" style="display: flex; justify-content: start;">
-      <div style="margin: 30px">
-        <img mat-card-xl-image src="https://scuffedentertainment.com/wp-content/uploads/2021/11/what-car-suits-you-best-quiz.jpg" >
-      </div>
-      <div style="width: 100%">
-        <div style="display: flex; justify-content: space-between;">
-          <p>Avtomobil</p>
-          <p>14.08.2000</p>
-        </div>
-        <mat-card-title>Audi A6 3.0tdi V6 motor 232ps 171kw quattro</mat-card-title>
-        <mat-card-subtitle>7800 eur</mat-card-subtitle>
-        <p>Godina: 2007</p>
-        <p>Kilometraza: 200 000 - 249 999</p>
-        <button mat-raised-button color="primary">Open</button>
-      </div>
-    </mat-card>
-    <mat-card class="example-card" style="display: flex; justify-content: start;">
-      <div style="margin: 30px">
-        <img mat-card-xl-image src="https://scuffedentertainment.com/wp-content/uploads/2021/11/what-car-suits-you-best-quiz.jpg" >
-      </div>
-      <div style="width: 100%">
-        <div style="display: flex; justify-content: space-between;">
-          <p>Avtomobil</p>
-          <p>14.08.2000</p>
-        </div>
-        <mat-card-title>Audi A6 3.0tdi V6 motor 232ps 171kw quattro</mat-card-title>
-        <mat-card-subtitle>7800 eur</mat-card-subtitle>
-        <p>Godina: 2007</p>
-        <p>Kilometraza: 200 000 - 249 999</p>
-        <button mat-raised-button color="primary">Open</button>
-      </div>
-    </mat-card>
-    <mat-card class="example-card" style="display: flex; justify-content: start;">
-      <div style="margin: 30px">
-        <img mat-card-xl-image src="https://scuffedentertainment.com/wp-content/uploads/2021/11/what-car-suits-you-best-quiz.jpg" >
-      </div>
-      <div style="width: 100%">
-        <div style="display: flex; justify-content: space-between;">
-          <p>Avtomobil</p>
-          <p>14.08.2000</p>
-        </div>
-        <mat-card-title>Audi A6 3.0tdi V6 motor 232ps 171kw quattro</mat-card-title>
-        <mat-card-subtitle>7800 eur</mat-card-subtitle>
-        <p>Godina: 2007</p>
-        <p>Kilometraza: 200 000 - 249 999</p>
-        <button mat-raised-button color="primary">Open</button>
-      </div>
-    </mat-card>
-    <mat-card class="example-card" style="display: flex; justify-content: start;">
-      <div style="margin: 30px">
-        <img mat-card-xl-image src="https://scuffedentertainment.com/wp-content/uploads/2021/11/what-car-suits-you-best-quiz.jpg" >
-      </div>
-      <div style="width: 100%">
-        <div style="display: flex; justify-content: space-between;">
-          <p>Avtomobil</p>
-          <p>14.08.2000</p>
-        </div>
-        <mat-card-title>Audi A6 3.0tdi V6 motor 232ps 171kw quattro</mat-card-title>
-        <mat-card-subtitle>7800 eur</mat-card-subtitle>
-        <p>Godina: 2007</p>
-        <p>Kilometraza: 200 000 - 249 999</p>
-        <button mat-raised-button color="primary">Open</button>
-      </div>
-    </mat-card>
-    <mat-card class="example-card" style="display: flex; justify-content: start;">
-      <div style="margin: 30px">
-        <img mat-card-xl-image src="https://scuffedentertainment.com/wp-content/uploads/2021/11/what-car-suits-you-best-quiz.jpg" >
-      </div>
-      <div style="width: 100%">
-        <div style="display: flex; justify-content: space-between;">
-          <p>Avtomobil</p>
-          <p>14.08.2000</p>
-        </div>
-        <mat-card-title>Audi A6 3.0tdi V6 motor 232ps 171kw quattro</mat-card-title>
-        <mat-card-subtitle>7800 eur</mat-card-subtitle>
-        <p>Godina: 2007</p>
-        <p>Kilometraza: 200 000 - 249 999</p>
-        <button mat-raised-button color="primary">Open</button>
-      </div>
-    </mat-card>
-    <mat-card class="example-card" style="display: flex; justify-content: start;">
-      <div style="margin: 30px">
-        <img mat-card-xl-image src="https://scuffedentertainment.com/wp-content/uploads/2021/11/what-car-suits-you-best-quiz.jpg" >
-      </div>
-      <div style="width: 100%">
-        <div style="display: flex; justify-content: space-between;">
-          <p>Avtomobil</p>
-          <p>14.08.2000</p>
-        </div>
-        <mat-card-title>Audi A6 3.0tdi V6 motor 232ps 171kw quattro</mat-card-title>
-        <mat-card-subtitle>7800 eur</mat-card-subtitle>
-        <p>Godina: 2007</p>
-        <p>Kilometraza: 200 000 - 249 999</p>
-        <button mat-raised-button color="primary">Open</button>
-      </div>
-    </mat-card>
-    <mat-card class="example-card" style="display: flex; justify-content: start;">
-      <div style="margin: 30px">
-        <img mat-card-xl-image src="https://scuffedentertainment.com/wp-content/uploads/2021/11/what-car-suits-you-best-quiz.jpg" >
-      </div>
-      <div style="width: 100%">
-        <div style="display: flex; justify-content: space-between;">
-          <p>Avtomobil</p>
-          <p>14.08.2000</p>
-        </div>
-        <mat-card-title>Audi A6 3.0tdi V6 motor 232ps 171kw quattro</mat-card-title>
-        <mat-card-subtitle>7800 eur</mat-card-subtitle>
-        <p>Godina: 2007</p>
-        <p>Kilometraza: 200 000 - 249 999</p>
-        <button mat-raised-button color="primary">Open</button>
-      </div>
-    </mat-card>
-
   </mat-drawer-content>
 </mat-drawer-container>

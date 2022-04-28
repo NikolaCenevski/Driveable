@@ -20,7 +20,7 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String description;
     @ElementCollection
-    private List<Byte[]> images;
+    private List<byte[]> images;
     @ManyToOne
     private User creator;
     private LocalDate date;

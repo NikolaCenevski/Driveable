@@ -5,9 +5,11 @@ import com.wp.driveable.driveableapi.dto.Response.PostResponse;
 import com.wp.driveable.driveableapi.dto.Response.Response;
 import com.wp.driveable.driveableapi.dto.requests.PostRequest;
 import com.wp.driveable.driveableapi.exceptions.NotFoundException;
+import com.wp.driveable.driveableapi.repository.PostRepository;
 import com.wp.driveable.driveableapi.service.PostService;
 import com.wp.driveable.driveableapi.service.ReportPostService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +21,12 @@ public class PostController {
 
     private final PostService postService;
     private final ReportPostService reportPostService;
+    private final PostRepository postRepository;
 
-    public PostController(PostService postService, ReportPostService reportPostService) {
+    public PostController(PostService postService, ReportPostService reportPostService, PostRepository postRepository) {
         this.postService = postService;
         this.reportPostService = reportPostService;
+        this.postRepository = postRepository;
     }
 
     @GetMapping
@@ -60,5 +64,10 @@ public class PostController {
         } catch (NotFoundException e) {
             return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping(value = "/image/{id}/{image}")
+    public ResponseEntity<?> getImage(@PathVariable Long id, @PathVariable int image) {
+        return ResponseEntity.ok(this.postRepository.getById(id).getImages().get(image));
     }
 }

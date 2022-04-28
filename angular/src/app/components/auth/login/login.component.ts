@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {TokenStorageService} from "../../../services/token-storage.service";
 import {AuthenticationService} from "../../../services/authentication.service";
-import {finalize} from "rxjs";
+import {MessageService} from "../../../services/message.service";
 
 @Component({
     selector: 'app-login',
@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private tokenStorage: TokenStorageService
+        private tokenStorage: TokenStorageService,
+        private messageService: MessageService,
     ) {
         if (this.tokenStorage.getToken()) {
             this.router.navigate(['/']);
@@ -41,22 +42,16 @@ export class LoginComponent implements OnInit {
         let password = this.loginForm.controls['password'].value
 
         this.loading = true;
-        this.authenticationService
-            .login(username, password)
-            .pipe(
-                finalize(() => {
-                    this.loading = false;
-                })
-            ).subscribe({
-                next: (data) => {
-                    this.tokenStorage.saveToken(data.token);
-                    this.tokenStorage.saveUser(JSON.stringify(data));
-                    this.router.navigate(['/']);
-                },
-                error: (error) => {
-
-                }
+        this.authenticationService.login(username, password).subscribe({
+            next: (data) => {
+                this.tokenStorage.saveToken(data.token);
+                this.tokenStorage.saveUser(JSON.stringify(data));
+                this.router.navigate(['/']);
+            },
+            error: () => {
+                this.messageService.showErrorMessage("Incorrect username or password");
+                this.loading = false;
             }
-        );
+        });
     }
 }

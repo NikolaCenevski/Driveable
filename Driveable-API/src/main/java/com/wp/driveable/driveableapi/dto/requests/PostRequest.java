@@ -19,5 +19,5 @@ public class PostRequest {
     private String color;
     private String manufacturer;
     private String model;
-    private List<Byte[]> images;
+    private List<byte[]> images;
 }
