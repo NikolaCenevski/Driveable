@@ -13,6 +13,7 @@ import com.wp.driveable.driveableapi.repository.UserRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,7 @@ public class PostService {
         post.setCar(car);
         post.setCreator(user);
         post.setTitle(postRequest.getTitle());
+        post.setDate(LocalDate.now());
         post.setDescription(postRequest.getDescription());
         post.setPrice(postRequest.getPrice());
         post.setColor(postRequest.getColor());
@@ -47,7 +49,7 @@ public class PostService {
         post.setCarType(postRequest.getCarType());
         post.setIsNew(postRequest.getIsNew());
         post.setManufacturingYear(postRequest.getManufacturingYear());
-        post.setImages(postRequest.getImages());
+        post.setImages(postRequest.getImages().stream().map(String::getBytes).collect(Collectors.toList()));
         postRepository.save(post);
 
         return new MessageResponse("Post created successfully");

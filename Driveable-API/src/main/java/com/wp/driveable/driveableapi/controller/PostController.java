@@ -13,6 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -67,7 +70,7 @@ public class PostController {
     }
 
     @GetMapping(value = "/image/{id}/{image}")
-    public ResponseEntity<?> getImage(@PathVariable Long id, @PathVariable int image) {
-        return ResponseEntity.ok(this.postRepository.getById(id).getImages().get(image));
+    public  byte[] getImage(@PathVariable Long id, @PathVariable int image) {
+        return this.postRepository.getById(id).getImages().get(image);
     }
 }

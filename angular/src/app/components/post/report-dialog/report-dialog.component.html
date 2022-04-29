@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Report</h1>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Enter description</mat-label>
+    <textarea rows="5" matInput [formControl]="descriptionFormControl"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="report()">Post</button>
+  <button mat-button (click)="onNoClick()">Close</button>
+</mat-dialog-actions>

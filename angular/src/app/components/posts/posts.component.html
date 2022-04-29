@@ -1,9 +1,9 @@
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened>I'm a drawer</mat-drawer>
   <mat-drawer-content>
-    <mat-card *ngFor="let post of posts; index as i">
+    <mat-card *ngFor="let post of posts;">
       <div class="title-image">
-        <img mat-card-xl-image [src]="images[i]" >
+        <img mat-card-xl-image [src]="images.get(post.id)" >
       </div>
       <div class="container">
         <div class="top">
@@ -16,7 +16,7 @@
         <p>Mileage: {{post.mileage}}</p>
         <p></p>
         <p>Horse power: {{post.horsepower}}</p>
-        <button mat-raised-button color="primary">Open</button>
+        <a mat-raised-button color="primary" [routerLink]="['/post', post.id]">Open</a>
       </div>
     </mat-card>
   </mat-drawer-content>

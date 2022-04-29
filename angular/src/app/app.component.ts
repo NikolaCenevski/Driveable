@@ -54,32 +54,9 @@ export class AppComponent implements OnInit {
     //     })}
     //   })
 
-    // onFileChange(event: any) {
-    //
-    //     this.files = []
-    //     if (event.target.files && event.target.files.length) {
-    //         for (let file of event.target.files) {
-    //             const reader = new FileReader();
-    //             reader.readAsDataURL(file);
-    //             reader.onload = () => {
-    //                 this.files.push(reader.result)
-    //             };
-    //         }
-    //     }
-    // }
+
 //
-//     getAllImages(imgNum: any) {
-//         for (let i = 0; i < this.post.imgNum; i++) {
-//             this.http.get(`/api/posts/1/image/${i}`, {responseType: "blob"})
-//                 .subscribe({
-//                     next: data => {
-//                         data.text().then((res) => {
-//                             this.images.push(this.sanitizer.bypassSecurityTrustUrl(res));
-//                         });
-//                     }
-//                 })
-//         }
-//     }
+
 //
 //     this.http.get("/api/posts/1").subscribe({
 //                                                 next: (data: any) => {

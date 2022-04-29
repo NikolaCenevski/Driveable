@@ -11,7 +11,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class PostsComponent implements OnInit {
 
     posts: Post[] = [];
-    images: any[] = []
+    images = new Map();
 
     constructor(private postService: PostService, private sanitizer: DomSanitizer) {
     }
@@ -23,6 +23,17 @@ export class PostsComponent implements OnInit {
                 this.getTitleImages();
             }
         })
+
+        this.postService.newPost.subscribe({
+            next: () => {
+                this.postService.getAllPosts().subscribe({
+                    next: (data) => {
+                        this.posts = data
+                        this.getTitleImages();
+                    }
+                })
+            }
+        })
     }
 
     getTitleImages() {
@@ -30,8 +41,9 @@ export class PostsComponent implements OnInit {
             this.postService.getPostImage(post.id, 0).subscribe({
                 next: (data) => {
                     data.text().then((res) => {
-                        this.images.push(this.sanitizer.bypassSecurityTrustUrl("data:image/png;base64, " + res));
+                        this.images.set(post.id, this.sanitizer.bypassSecurityTrustUrl(res));
                     });
+                    console.log(this.images)
                 }
             })
         }

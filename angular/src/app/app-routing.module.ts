@@ -4,10 +4,11 @@ import {AuthComponent} from "./components/auth/auth.component";
 import {LoginComponent} from "./components/auth/login/login.component";
 import {RegisterComponent} from "./components/auth/register/register.component";
 import {PostsComponent} from "./components/posts/posts.component";
+import {PostComponent} from "./components/post/post.component";
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'auth',
         component: AuthComponent,
         children:
             [
@@ -25,6 +26,14 @@ const routes: Routes = [
     {
         path: 'posts',
         component: PostsComponent
+    },
+    {
+        path: 'post/:id',
+        component: PostComponent
+    },
+    {
+        path: '**',
+        redirectTo: '/posts'
     }
 ]
 

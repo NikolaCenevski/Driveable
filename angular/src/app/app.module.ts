@@ -25,6 +25,12 @@ import {MatChipsModule} from "@angular/material/chips";
 import { PostsComponent } from './components/posts/posts.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { CreatePostDialogComponent } from './components/header/create-post-dialog/create-post-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { PostComponent } from './components/post/post.component';
+import {NgImageSliderModule} from "ng-image-slider";
+import { ReportDialogComponent } from './components/post/report-dialog/report-dialog.component';
 
 @NgModule({
     declarations: [
@@ -34,6 +40,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         LoginComponent,
         RegisterComponent,
         PostsComponent,
+        CreatePostDialogComponent,
+        PostComponent,
+        ReportDialogComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -55,6 +64,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         MatChipsModule,
         MatSidenavModule,
         MatSnackBarModule,
+        MatDialogModule,
+        MatCheckboxModule,
+        NgImageSliderModule,
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}

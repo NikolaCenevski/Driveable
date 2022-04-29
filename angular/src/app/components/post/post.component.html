@@ -1,0 +1,68 @@
+<div style="display: flex; justify-content: flex-start;" *ngIf="post">
+  <div style="width: 50%; padding: 10px; height: 65vh">
+    <div style="width: 500px; height: 500px; margin: auto">
+      <ng-image-slider #nav
+                       [images]="images"
+                       [infinite]="true"
+                       [autoSlide]="autoSlide"
+                       [animationSpeed]="0.5"
+                       [showArrow]="showArrow"
+                       [imageSize]="{width: 500, height: 500}"
+                       [arrowKeyMove]="false"
+                       slideImage="1"></ng-image-slider>
+    </div>
+  </div>
+  <div style="width: 40%; padding: 10px; font-size: 24px; margin-top: 20px; height: 65vh;">
+    <div class="space-between">
+      <h1>{{post.title}}</h1>
+      <p>{{post.date}}</p>
+    </div>
+    <p>{{post.isNew ? 'New' : 'Used'}}</p>
+    <div class="space-between">
+      <p>Price:</p>
+      <p><b>{{post.price}} eur</b></p>
+    </div>
+    <div class="space-between">
+      <p>Horse Power:</p>
+      <p><b>{{post.horsepower}}</b></p>
+    </div>
+    <div class="space-between">
+      <p>Mileage:</p>
+      <p><b>{{post.mileage}}</b></p>
+    </div>
+    <div class="space-between">
+      <p>Year:</p>
+      <p><b>{{post.manufacturingYear}}</b></p>
+    </div>
+    <div class="space-between">
+      <p>Car type:</p>
+      <p><b>{{post.carType}}</b></p>
+    </div>
+    <div class="space-between">
+      <p>Color:</p>
+      <p><b>{{post.color}}</b></p>
+    </div>
+    <div class="space-between">
+      <p>Car Manufacturer:</p>
+      <p><b>{{post.car.manufacturer}}</b></p>
+    </div>
+    <div class="space-between">
+      <p>Car Model:</p>
+      <p><b>{{post.car.model}}</b></p>
+    </div>
+    <div class="space-between">
+      <p>Posted by:</p>
+      <p><b>{{post.name}} {{post.surname}} - <a color="primary" mat-raised-button href="tel:{{post.phoneNumber}}">Call
+        - {{post.phoneNumber}}</a></b></p>
+    </div>
+    <div>
+      <button (click)="openReportDialog()" mat-raised-button color="warn">Report
+        <mat-icon>report</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="post" style="padding: 10px">
+  <p>jdijask jkasjk djasklj kldjlaks jdklasj kldjkals jkasj dasj lkdask jlasj dkjask djask jdklasj lkdajslk jaskl
+    jdklasj dkasjk djaslk djkasj dkasj lkjask jdklasj kasjk jaskd jlsa</p>
+</div>

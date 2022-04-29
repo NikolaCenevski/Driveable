@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtFilter = jwtFilter;
         this.passwordEncoder = passwordEncoder;
     }
-    String[] publicMatchers={"/api/auth/**"};
+    String[] publicMatchers={"/api/auth/**", "/api/posts/**"};
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
