@@ -28,7 +28,7 @@ public class CarService {
     }
 
     public List<String> getAllManufacturers() {
-        return carRepository.findAll().stream().map(this::mapToManufacturer).collect(Collectors.toList());
+        return carRepository.findAll().stream().map(this::mapToManufacturer).distinct().collect(Collectors.toList());
     }
     public List<String> getAllModels(String manufacturer) {
         return carRepository.findAllByManufacturer(manufacturer).stream().map(this::mapToModel).collect(Collectors.toList());

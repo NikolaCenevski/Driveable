@@ -30,7 +30,7 @@ public class Post {
     private int price;
     private Boolean isNew;
     @ManyToMany
-    private List<CarType> carType;
+    private List<CarType> carTypes;
     private String color;
     @ManyToOne
     private Car car;
