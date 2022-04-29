@@ -1,10 +1,84 @@
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened>I'm a drawer</mat-drawer>
+  <mat-drawer mode="side" opened style="padding: 10px">
+    <form [formGroup]="postsForm" fxLayout="column" fxLayoutAlign="flex-start">
+      <section style="margin-bottom: 20px">
+        <mat-checkbox formControlName="isNew">New</mat-checkbox>
+      </section>
+      <div fxFlex fxLayout="row" fxLayoutGap="5px">
+        <mat-form-field appearance="fill" fxFlex="49">
+          <mat-label>Car manufacturer</mat-label>
+          <mat-select formControlName="manufacturer">
+            <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer">
+              {{manufacturer}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" fxFlex="49">
+          <mat-label>Car model</mat-label>
+          <mat-select formControlName="model">
+            <mat-option *ngFor="let model of models" [value]="model">
+              {{model}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <p>Manufacturing year</p>
+      <div fxFlex fxLayout="row" fxLayoutGap="5px">
+        <mat-form-field appearance="fill" fxFlex="49">
+          <mat-label>Year from</mat-label>
+          <input formControlName="yearFrom" matInput type="number"/>
+        </mat-form-field>
+        <mat-form-field appearance="fill" fxFlex="49">
+          <mat-label>Year to</mat-label>
+          <input formControlName="yearTo" matInput type="number"/>
+        </mat-form-field>
+      </div>
+      <p>Price</p>
+      <div fxFlex fxLayout="row" fxLayoutGap="5px">
+        <mat-form-field appearance="fill" fxFlex="49">
+          <mat-label>Price from</mat-label>
+          <input formControlName="priceFrom" matInput type="number"/>
+        </mat-form-field>
+        <mat-form-field appearance="fill" fxFlex="49">
+          <mat-label>Price to</mat-label>
+          <input formControlName="priceTo" matInput type="number"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill" style="display: block">
+          <mat-label>Color</mat-label>
+          <input formControlName="color" matInput type="text"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Sort by</mat-label>
+          <mat-select formControlName="sortBy">
+            <mat-option [value]="'date'">
+              Date
+            </mat-option>
+            <mat-option [value]="'price'">
+              Price
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Car type</mat-label>
+          <mat-select formControlName="carTypes" multiple>
+            <mat-option *ngFor="let carType of carTypes" [value]="carType">{{carType}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="primary" (click)="search()">Search</button>
+    </form>
+  </mat-drawer>
   <mat-drawer-content>
     <div style="height: calc(100vh - 155px); overflow: auto">
       <mat-card *ngFor="let post of posts;">
         <div class="title-image">
-          <img mat-card-xl-image [src]="images.get(post.id)">
+          <img mat-card-xl-image [src]="images.get(post.id)" alt="car">
         </div>
         <div class="container">
           <div class="top">

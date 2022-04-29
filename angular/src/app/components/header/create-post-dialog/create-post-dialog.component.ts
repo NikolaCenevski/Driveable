@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormControl} from "@angular/forms";
 import {PostService} from "../../../services/post.service";
 import {MessageService} from "../../../services/message.service";
 import {MatDialogRef} from "@angular/material/dialog";
+import {catchError, mergeMap, Observable, of, startWith} from "rxjs";
 
 @Component({
     selector: 'app-create-post-dialog',
@@ -18,15 +19,21 @@ export class CreatePostDialogComponent implements OnInit {
         mileage: 0,
         manufacturingYear: '',
         price: 0,
-        carType: '',
+        carType: new FormControl([]),
         color: '',
         images: '',
         model: '',
         manufacturer: '',
         isNew: false,
     })
-
     files: any[] = []
+    carTypes: string[] = []
+
+    manufacturers: string[] = []
+    filteredManufacturers: string[] = [];
+
+    models: string[] = []
+    filteredModels: string[] = [];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -37,6 +44,41 @@ export class CreatePostDialogComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
+        this.postService.getManufacturers().subscribe({
+            next: (data) => {
+                this.manufacturers = data
+                this.filteredManufacturers = this._filterManufacturers('')
+            }
+        })
+
+        this.postService.getCarTypes().subscribe({
+            next: (data) => {
+                this.carTypes = data
+            }
+        })
+
+        this.createForm.controls['manufacturer'].valueChanges.pipe(
+            startWith(''),
+            mergeMap(value => {
+                this.filteredManufacturers = this._filterManufacturers(value)
+                return this.postService.getModels(value)
+            }),
+            catchError((): Observable<string[]> => of([]))
+        ).subscribe({
+            next: (data) => {
+                this.models = data
+                this.filteredModels = this._filterModels('')
+            }
+        });
+
+        this.createForm.controls['model'].valueChanges.pipe(
+            startWith(''),
+        ).subscribe({
+            next: (data) => {
+                this.filteredModels = this._filterModels(data)
+            }
+        })
     }
 
     post() {
@@ -69,5 +111,17 @@ export class CreatePostDialogComponent implements OnInit {
 
     onNoClick() {
         this.dialogRef.close()
+    }
+
+    private _filterManufacturers(value: string): string[] {
+        const filterValue = value.toLowerCase();
+
+        return this.manufacturers.filter(option => option.toLowerCase().includes(filterValue));
+    }
+
+    private _filterModels(value: string): string[] {
+        const filterValue = value.toLowerCase();
+
+        return this.models.filter(option => option.toLowerCase().includes(filterValue));
     }
 }

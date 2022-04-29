@@ -17,7 +17,7 @@ public class ReportPostResponse implements Response {
     private String title;
     private String description;
     private int horsepower;
-    private String manufacturingYear;
+    private Integer manufacturingYear;
     private int price;
     private int mileage;
     private LocalDate date;

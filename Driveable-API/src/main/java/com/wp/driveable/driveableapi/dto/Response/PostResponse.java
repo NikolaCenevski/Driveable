@@ -17,7 +17,7 @@ public class PostResponse implements Response{
     private int horsepower;
     private int mileage;
     private LocalDate date;
-    private String manufacturingYear;
+    private Integer manufacturingYear;
     private int price;
     private String name;
     private String surname;

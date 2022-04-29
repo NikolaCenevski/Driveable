@@ -26,7 +26,7 @@ public class Post {
     private LocalDate date;
     private int horsepower;
     private int mileage;
-    private String manufacturingYear;
+    private Integer manufacturingYear;
     private int price;
     private Boolean isNew;
     @ManyToMany
