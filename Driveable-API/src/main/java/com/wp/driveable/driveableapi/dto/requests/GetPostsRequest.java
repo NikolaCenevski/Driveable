@@ -19,4 +19,5 @@ public class GetPostsRequest {
     Integer yearFrom;
     Integer yearTo;
     String sortBy;
+    String color;
 }

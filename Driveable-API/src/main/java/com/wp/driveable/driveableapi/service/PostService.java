@@ -82,6 +82,10 @@ public class PostService {
         if (getPostsRequest.getYearTo() != null) {
             posts = posts.stream().filter(r -> r.getDate().getYear() <= getPostsRequest.getYearTo()).collect(Collectors.toList());
         }
+        if (getPostsRequest.getColor()!=null)
+        {
+            posts=posts.stream().filter(r->r.getColor().equals(getPostsRequest.getColor())).collect(Collectors.toList());
+        }
         return posts.stream().map(this::mapToPostResponse).collect(Collectors.toList());
     }
 
