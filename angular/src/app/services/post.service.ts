@@ -33,4 +33,12 @@ export class PostService {
     reportPost(postId: number, description: string): Observable<Message> {
         return this.http.post<Message>(`/api/posts/${postId}/report`,description);
     }
+
+    getManufacturers(): Observable<string[]> {
+        return this.http.get<string[]>('/api/posts/manufacturer')
+    }
+
+    getModels(manufacturer: string): Observable<string[]> {
+        return this.http.get<string[]>(`/api/posts/model?manufacturer=${manufacturer}`)
+    }
 }

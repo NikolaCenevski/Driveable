@@ -3,6 +3,7 @@ import {FormBuilder} from "@angular/forms";
 import {PostService} from "../../../services/post.service";
 import {MessageService} from "../../../services/message.service";
 import {MatDialogRef} from "@angular/material/dialog";
+import {catchError, map, mergeMap, Observable, of, startWith} from "rxjs";
 
 @Component({
     selector: 'app-create-post-dialog',
@@ -25,8 +26,13 @@ export class CreatePostDialogComponent implements OnInit {
         manufacturer: '',
         isNew: false,
     })
-
     files: any[] = []
+
+    manufacturers: string[] = []
+    filteredManufacturers: string[] = [];
+
+    models: string[] = []
+    filteredModels: string[] = [];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -37,6 +43,32 @@ export class CreatePostDialogComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
+        this.postService.getManufacturers().subscribe({
+            next: (data) => {
+                this.manufacturers = data
+            }
+        })
+
+        this.createForm.controls['manufacturer'].valueChanges.pipe(
+            startWith(''),
+            mergeMap(value => {
+                this.filteredManufacturers = this._filterManufacturers(value)
+                return this.postService.getModels(value)
+            }),
+            catchError((): Observable<string[]> => of([]))
+        ).subscribe({
+            next: (data) => {
+                this.models = data
+            }
+        });
+
+        this.createForm.controls['model'].valueChanges.pipe(
+            startWith(''),
+            map(value => {
+                this.filteredModels = this._filterModels(value)
+            })
+        )
     }
 
     post() {
@@ -69,5 +101,17 @@ export class CreatePostDialogComponent implements OnInit {
 
     onNoClick() {
         this.dialogRef.close()
+    }
+
+    private _filterManufacturers(value: string): string[] {
+        const filterValue = value.toLowerCase();
+
+        return this.manufacturers.filter(option => option.toLowerCase().includes(filterValue));
+    }
+
+    private _filterModels(value: string): string[] {
+        const filterValue = value.toLowerCase();
+
+        return this.models.filter(option => option.toLowerCase().includes(filterValue));
     }
 }
