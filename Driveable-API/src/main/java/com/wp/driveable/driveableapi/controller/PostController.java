@@ -6,16 +6,13 @@ import com.wp.driveable.driveableapi.dto.Response.Response;
 import com.wp.driveable.driveableapi.dto.requests.PostRequest;
 import com.wp.driveable.driveableapi.exceptions.NotFoundException;
 import com.wp.driveable.driveableapi.repository.PostRepository;
+import com.wp.driveable.driveableapi.service.CarService;
 import com.wp.driveable.driveableapi.service.PostService;
 import com.wp.driveable.driveableapi.service.ReportPostService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -25,11 +22,12 @@ public class PostController {
     private final PostService postService;
     private final ReportPostService reportPostService;
     private final PostRepository postRepository;
-
-    public PostController(PostService postService, ReportPostService reportPostService, PostRepository postRepository) {
+    private final CarService carService;
+    public PostController(PostService postService, ReportPostService reportPostService, PostRepository postRepository, CarService carService) {
         this.postService = postService;
         this.reportPostService = reportPostService;
         this.postRepository = postRepository;
+        this.carService = carService;
     }
 
     @GetMapping
@@ -72,5 +70,15 @@ public class PostController {
     @GetMapping(value = "/image/{id}/{image}")
     public  byte[] getImage(@PathVariable Long id, @PathVariable int image) {
         return this.postRepository.getById(id).getImages().get(image);
+    }
+    @GetMapping("/manufacturer")
+    public List<String> getAllManufacturers()
+    {
+        return carService.getAllManufacturers();
+    }
+    @GetMapping("/model")
+    public List<String> getAllManufacturers(@RequestParam String manufacturer)
+    {
+        return carService.getAllModels(manufacturer);
     }
 }

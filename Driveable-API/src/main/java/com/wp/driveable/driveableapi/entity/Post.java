@@ -29,7 +29,8 @@ public class Post {
     private String manufacturingYear;
     private int price;
     private Boolean isNew;
-    private String carType;
+    @ManyToMany
+    private List<CarType> carType;
     private String color;
     @ManyToOne
     private Car car;
