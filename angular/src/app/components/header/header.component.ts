@@ -21,6 +21,15 @@ export class HeaderComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    name() {
+        let user = this.tokenStorageService.getUser();
+        if(user) {
+            return user.name + " " + user.surname
+        }
+
+        return ''
+    }
+
     signOut() {
         this.tokenStorageService.signOut();
         this.router.navigate(['/login']);

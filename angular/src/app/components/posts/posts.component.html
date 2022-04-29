@@ -1,23 +1,30 @@
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened>I'm a drawer</mat-drawer>
   <mat-drawer-content>
-    <mat-card *ngFor="let post of posts;">
-      <div class="title-image">
-        <img mat-card-xl-image [src]="images.get(post.id)" >
-      </div>
-      <div class="container">
-        <div class="top">
-          <p>{{post.isNew ? 'New' : 'Used'}}</p>
-          <p>{{post.date}}</p>
+    <div style="height: calc(100vh - 155px); overflow: auto">
+      <mat-card *ngFor="let post of posts;">
+        <div class="title-image">
+          <img mat-card-xl-image [src]="images.get(post.id)">
         </div>
-        <mat-card-title>{{post.title}}</mat-card-title>
-        <mat-card-subtitle>{{post.price}} eur</mat-card-subtitle>
-        <p>Year: {{post.manufacturingYear}}</p>
-        <p>Mileage: {{post.mileage}}</p>
-        <p></p>
-        <p>Horse power: {{post.horsepower}}</p>
-        <a mat-raised-button color="primary" [routerLink]="['/post', post.id]">Open</a>
-      </div>
-    </mat-card>
+        <div class="container">
+          <div class="top">
+            <p>{{post.isNew ? 'New' : 'Used'}}</p>
+            <p>{{post.date}}</p>
+          </div>
+          <mat-card-title>{{post.title}}</mat-card-title>
+          <mat-card-subtitle>{{post.price}} eur</mat-card-subtitle>
+          <p>Year: {{post.manufacturingYear}}</p>
+          <p>Mileage: {{post.mileage}}</p>
+          <p></p>
+          <p>Horse power: {{post.horsepower}}</p>
+          <a mat-raised-button color="primary" [routerLink]="['/post', post.id]">Open</a>
+        </div>
+      </mat-card>
+    </div>
+    <mat-paginator [length]="100"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 25, 100]"
+                   aria-label="Select page">
+    </mat-paginator>
   </mat-drawer-content>
 </mat-drawer-container>

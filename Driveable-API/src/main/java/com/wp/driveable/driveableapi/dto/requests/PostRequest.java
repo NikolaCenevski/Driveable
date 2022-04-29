@@ -13,6 +13,7 @@ public class PostRequest {
     private String description;
     private int horsepower;
     private String manufacturingYear;
+    private int mileage;
     private int price;
     private Boolean isNew;
     private String carType;

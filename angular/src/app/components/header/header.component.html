@@ -1,9 +1,9 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>
+    <a routerLink="posts" style="color: white">
 <!--      <img src="assets/delivery.png" class="logo">-->
       Deliverable
-    </span>
+    </a>
 
     <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
       <mat-chip-list *ngIf="!isLoggedIn()">
@@ -25,6 +25,7 @@
             Create post
           </mat-chip>
         </a>
+        <p style="margin: 0">{{name()}}</p>
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>more_vert</mat-icon>
         </button>

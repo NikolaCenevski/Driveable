@@ -31,6 +31,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { PostComponent } from './components/post/post.component';
 import {NgImageSliderModule} from "ng-image-slider";
 import { ReportDialogComponent } from './components/post/report-dialog/report-dialog.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
     declarations: [
@@ -67,6 +68,7 @@ import { ReportDialogComponent } from './components/post/report-dialog/report-di
         MatDialogModule,
         MatCheckboxModule,
         NgImageSliderModule,
+        MatPaginatorModule,
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}

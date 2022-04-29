@@ -43,6 +43,7 @@ public class PostService {
         post.setTitle(postRequest.getTitle());
         post.setDate(LocalDate.now());
         post.setDescription(postRequest.getDescription());
+        post.setMileage(postRequest.getMileage());
         post.setPrice(postRequest.getPrice());
         post.setColor(postRequest.getColor());
         post.setHorsepower(postRequest.getHorsepower());
