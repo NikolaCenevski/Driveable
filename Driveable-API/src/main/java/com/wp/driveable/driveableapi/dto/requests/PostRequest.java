@@ -16,7 +16,7 @@ public class PostRequest {
     private int mileage;
     private int price;
     private Boolean isNew;
-    private String carType;
+    private List<String> carType;
     private String color;
     private String manufacturer;
     private String model;

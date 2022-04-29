@@ -23,7 +23,7 @@ public class PostResponse implements Response{
     private String surname;
     private String phoneNumber;
     private Boolean isNew;
-    private String carType;
+    private List<String> carType;
     private String color;
     private Car car;
     private int numOfImages;

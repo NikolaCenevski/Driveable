@@ -3,10 +3,12 @@ package com.wp.driveable.driveableapi.controller;
 import com.wp.driveable.driveableapi.dto.Response.MessageResponse;
 import com.wp.driveable.driveableapi.dto.Response.PostResponse;
 import com.wp.driveable.driveableapi.dto.Response.Response;
+import com.wp.driveable.driveableapi.dto.requests.GetPostsRequest;
 import com.wp.driveable.driveableapi.dto.requests.PostRequest;
 import com.wp.driveable.driveableapi.exceptions.NotFoundException;
 import com.wp.driveable.driveableapi.repository.PostRepository;
 import com.wp.driveable.driveableapi.service.CarService;
+import com.wp.driveable.driveableapi.service.CarTypeService;
 import com.wp.driveable.driveableapi.service.PostService;
 import com.wp.driveable.driveableapi.service.ReportPostService;
 import org.springframework.http.HttpStatus;
@@ -23,16 +25,22 @@ public class PostController {
     private final ReportPostService reportPostService;
     private final PostRepository postRepository;
     private final CarService carService;
-    public PostController(PostService postService, ReportPostService reportPostService, PostRepository postRepository, CarService carService) {
+    private final CarTypeService carTypeService;
+    public PostController(PostService postService, ReportPostService reportPostService, PostRepository postRepository, CarService carService, CarTypeService carTypeService) {
         this.postService = postService;
         this.reportPostService = reportPostService;
         this.postRepository = postRepository;
         this.carService = carService;
+        this.carTypeService = carTypeService;
     }
-
     @GetMapping
-    public List<PostResponse> getAllPosts() {
+    public List<PostResponse> getAllPosts()
+    {
         return postService.getAllPosts();
+    }
+    @PostMapping
+    public List<PostResponse> getAllPosts(@RequestBody GetPostsRequest getPostsRequest) {
+        return postService.getAllPosts(getPostsRequest);
     }
 
     @GetMapping("/user/{id}")
@@ -80,5 +88,10 @@ public class PostController {
     public List<String> getAllManufacturers(@RequestParam String manufacturer)
     {
         return carService.getAllModels(manufacturer);
+    }
+    @GetMapping("/carTypes")
+    public List<String> getAllCarTypes()
+    {
+      return carTypeService.getAllCarTypes();
     }
 }
