@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormControl} from "@angular/forms";
 import {PostService} from "../../../services/post.service";
 import {MessageService} from "../../../services/message.service";
 import {MatDialogRef} from "@angular/material/dialog";
-import {catchError, map, mergeMap, Observable, of, startWith} from "rxjs";
+import {catchError, mergeMap, Observable, of, startWith} from "rxjs";
 
 @Component({
     selector: 'app-create-post-dialog',
@@ -19,7 +19,7 @@ export class CreatePostDialogComponent implements OnInit {
         mileage: 0,
         manufacturingYear: '',
         price: 0,
-        carType: '',
+        carType: new FormControl([]),
         color: '',
         images: '',
         model: '',
@@ -27,6 +27,7 @@ export class CreatePostDialogComponent implements OnInit {
         isNew: false,
     })
     files: any[] = []
+    carTypes: string[] = []
 
     manufacturers: string[] = []
     filteredManufacturers: string[] = [];
@@ -47,6 +48,13 @@ export class CreatePostDialogComponent implements OnInit {
         this.postService.getManufacturers().subscribe({
             next: (data) => {
                 this.manufacturers = data
+                this.filteredManufacturers = this._filterManufacturers('')
+            }
+        })
+
+        this.postService.getCarTypes().subscribe({
+            next: (data) => {
+                this.carTypes = data
             }
         })
 
@@ -60,15 +68,17 @@ export class CreatePostDialogComponent implements OnInit {
         ).subscribe({
             next: (data) => {
                 this.models = data
+                this.filteredModels = this._filterModels('')
             }
         });
 
         this.createForm.controls['model'].valueChanges.pipe(
             startWith(''),
-            map(value => {
-                this.filteredModels = this._filterModels(value)
-            })
-        )
+        ).subscribe({
+            next: (data) => {
+                this.filteredModels = this._filterModels(data)
+            }
+        })
     }
 
     post() {

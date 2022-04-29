@@ -30,8 +30,10 @@
       <input matInput type="number" formControlName="price"/>
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Enter carType</mat-label>
-      <input matInput formControlName="carType"/>
+      <mat-label>Car type</mat-label>
+      <mat-select formControlName="carType" multiple>
+        <mat-option *ngFor="let carType of carTypes" [value]="carType">{{carType}}</mat-option>
+      </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Enter color</mat-label>

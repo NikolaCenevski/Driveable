@@ -59,8 +59,8 @@ public class PostService {
                     }
                 }
             }
+            posts = newPosts;
         }
-        posts = newPosts;
         if (getPostsRequest.getIsNew() != null) {
             posts = posts.stream().filter(r -> r.getIsNew() == getPostsRequest.getIsNew()).collect(Collectors.toList());
         }
@@ -77,10 +77,10 @@ public class PostService {
             posts = posts.stream().filter(r -> r.getPrice() <= getPostsRequest.getPriceTo()).collect(Collectors.toList());
         }
         if (getPostsRequest.getYearFrom() != null) {
-            posts = posts.stream().filter(r -> r.getDate().getYear() >= getPostsRequest.getYearFrom()).collect(Collectors.toList());
+            posts = posts.stream().filter(r -> r.getManufacturingYear() >= getPostsRequest.getYearFrom()).collect(Collectors.toList());
         }
         if (getPostsRequest.getYearTo() != null) {
-            posts = posts.stream().filter(r -> r.getDate().getYear() <= getPostsRequest.getYearTo()).collect(Collectors.toList());
+            posts = posts.stream().filter(r -> r.getManufacturingYear() <= getPostsRequest.getYearTo()).collect(Collectors.toList());
         }
         if (getPostsRequest.getColor()!=null)
         {
