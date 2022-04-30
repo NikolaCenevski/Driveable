@@ -85,6 +85,7 @@ export class PostsComponent implements OnInit {
     }
 
     search() {
+        console.log(this.postsForm.value)
         let isNew = this.postsForm.controls['isNew'].value
         let manufacturer = this.postsForm.controls['manufacturer'].value
         let model = this.postsForm.controls['model'].value
@@ -123,6 +124,22 @@ export class PostsComponent implements OnInit {
         })
     }
 
+    reset(){
+        this.postsForm = this.formBuilder.group({
+            isNew: false,
+            manufacturer: '',
+            model: '',
+            yearFrom: '',
+            yearTo: '',
+            priceFrom: '',
+            priceTo: '',
+            mileageBellow: '',
+            color: '',
+            sortBy: 'date',
+            carTypes: new FormControl([])
+        })
+
+    }
     onPageEvent(pageEvent: PageEvent) {
         this.router.navigate(['posts', pageEvent.pageIndex])
     }

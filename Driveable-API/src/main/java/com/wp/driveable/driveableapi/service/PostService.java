@@ -55,7 +55,7 @@ public class PostService {
             List<String> carTypes = getPostsRequest.getCarTypes();
             for (int i = 0; i < posts.size(); i++) {
                 for (int j = 0; j < carTypes.size(); j++) {
-                    if (posts.get(i).getCarTypes().contains(carTypeRepository.findByType(carTypes.get(i)))) {
+                    if (posts.get(i).getCarTypes().contains(carTypeRepository.findByType(carTypes.get(j)))) {
                         newPosts.add(posts.get(i));
                         break;
                     }

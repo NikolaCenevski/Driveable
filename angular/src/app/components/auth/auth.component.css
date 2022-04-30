@@ -1,5 +1,5 @@
 :host {
-  background-image: url("/../assets/background.PNG");
+  background-image: url("/../assets/CARS.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -7,5 +7,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90vh;
+  height: 100%;
 }
