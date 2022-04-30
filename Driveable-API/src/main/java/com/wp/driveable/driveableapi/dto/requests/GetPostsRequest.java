@@ -20,4 +20,5 @@ public class GetPostsRequest {
     Integer yearTo;
     String sortBy;
     String color;
+    Integer mileageBelow;
 }

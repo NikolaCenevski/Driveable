@@ -69,6 +69,7 @@ public class PostService {
             if (getPostsRequest.getModel() != null) {
                 posts = posts.stream().filter(r -> r.getCar().getModel().equals(getPostsRequest.getModel())).collect(Collectors.toList());
             }
+
         }
         if (getPostsRequest.getPriceFrom() != null) {
             posts = posts.stream().filter(r -> r.getPrice() >= getPostsRequest.getPriceFrom()).collect(Collectors.toList());
@@ -85,6 +86,10 @@ public class PostService {
         if (getPostsRequest.getColor()!=null)
         {
             posts=posts.stream().filter(r->r.getColor().equals(getPostsRequest.getColor())).collect(Collectors.toList());
+        }
+        if (getPostsRequest.getMileageBelow()!=null)
+        {
+            posts=posts.stream().filter(r->r.getMileage()<=getPostsRequest.getMileageBelow()).collect(Collectors.toList());
         }
         return posts.stream().map(this::mapToPostResponse).collect(Collectors.toList());
     }
