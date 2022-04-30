@@ -3,6 +3,7 @@ import {TokenStorageService} from "../../services/token-storage.service";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {CreatePostDialogComponent} from "./create-post-dialog/create-post-dialog.component";
+import {EditProfileDialogComponent} from "./edit-profile-dialog/edit-profile-dialog.component";
 
 @Component({
     selector: 'app-header',
@@ -12,7 +13,7 @@ import {CreatePostDialogComponent} from "./create-post-dialog/create-post-dialog
 export class HeaderComponent implements OnInit {
 
     constructor(
-        private tokenStorageService: TokenStorageService,
+        public tokenStorageService: TokenStorageService,
         private router: Router,
         private dialog: MatDialog
         ) {
@@ -42,6 +43,12 @@ export class HeaderComponent implements OnInit {
     openCreatPostDialog() {
         this.dialog.open(CreatePostDialogComponent, {
             width: '800px'
+        })
+    }
+
+    openEditProfileDialog() {
+        this.dialog.open(EditProfileDialogComponent, {
+            width: '500px'
         })
     }
 }

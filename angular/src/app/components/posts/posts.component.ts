@@ -4,6 +4,8 @@ import {Post} from "../../models/post";
 import {DomSanitizer} from "@angular/platform-browser";
 import {FormBuilder, FormControl} from "@angular/forms";
 import {mergeMap} from "rxjs";
+import {PageEvent} from "@angular/material/paginator";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: 'app-posts',
@@ -18,6 +20,11 @@ export class PostsComponent implements OnInit {
     models: string[] = [];
     carTypes: string[] = []
 
+    length!: number;
+    pageIndex = 0;
+    pageSize = 10;
+
+
     postsForm = this.formBuilder.group({
         isNew: false,
         manufacturer: '',
@@ -26,6 +33,7 @@ export class PostsComponent implements OnInit {
         yearTo: '',
         priceFrom: '',
         priceTo: '',
+        mileageBellow: '',
         color: '',
         sortBy: 'date',
         carTypes: new FormControl([])
@@ -34,15 +42,18 @@ export class PostsComponent implements OnInit {
     constructor(
         private postService: PostService,
         private formBuilder: FormBuilder,
+        private router: Router,
+        private route: ActivatedRoute,
         private sanitizer: DomSanitizer
     ) {
     }
 
     ngOnInit(): void {
-        this.postService.getAllPosts().subscribe({
+
+        this.route.paramMap.subscribe({
             next: (data) => {
-                this.posts = data
-                this.getTitleImages();
+                this.pageIndex = +data.get('page')!;
+                this.search()
             }
         })
 
@@ -66,12 +77,9 @@ export class PostsComponent implements OnInit {
             }
         })
 
-        this.postService.newPost.pipe(
-            mergeMap(() => this.postService.getAllPosts())
-        ).subscribe({
-            next: (data) => {
-                this.posts = data
-                this.getTitleImages();
+        this.postService.newPost.subscribe({
+            next: () => {
+                this.search();
             }
         })
     }
@@ -84,15 +92,39 @@ export class PostsComponent implements OnInit {
         let yearTo = this.postsForm.controls['yearTo'].value
         let priceFrom = this.postsForm.controls['priceFrom'].value
         let priceTo = this.postsForm.controls['priceTo'].value
+        let mileageBellow = this.postsForm.controls['mileageBellow'].value
         let color = this.postsForm.controls['color'].value
         let sortBy = this.postsForm.controls['sortBy'].value
         let carTypes = this.postsForm.controls['carTypes'].value
-        this.postService.getPosts(isNew, manufacturer, model, yearFrom, yearTo, priceFrom, priceTo, color, sortBy, carTypes).subscribe({
+        this.postService.getPosts(
+            this.pageIndex,
+            isNew,
+            manufacturer,
+            model,
+            yearFrom,
+            yearTo,
+            priceFrom,
+            priceTo,
+            mileageBellow,
+            color,
+            sortBy,
+            carTypes
+        ).subscribe({
             next: (data) => {
-                this.posts = data
+                if (this.pageIndex >= data.totalPages) {
+                    this.pageIndex = data.totalPages - 1;
+                    this.router.navigate(['posts', this.pageIndex])
+                }
+                console.log(data)
+                this.posts = data.content
+                this.length = data.totalElements
                 this.getTitleImages();
             }
         })
+    }
+
+    onPageEvent(pageEvent: PageEvent) {
+        this.router.navigate(['posts', pageEvent.pageIndex])
     }
 
     getTitleImages() {

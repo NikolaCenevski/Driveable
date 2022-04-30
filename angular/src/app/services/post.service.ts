@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable, of, Subject} from "rxjs";
 import {Post} from "../models/post";
 import {Message} from "../models/message";
+import {Page} from "../models/page";
 
 @Injectable({
     providedIn: 'root'
@@ -19,6 +20,7 @@ export class PostService {
     }
 
     getPosts(
+        page: number,
         isNew: boolean,
         manufacturer: string,
         model: string,
@@ -26,10 +28,11 @@ export class PostService {
         yearTo: string,
         priceFrom: string,
         priceTo: string,
+        mileageBellow: string,
         color: string,
         sortBy: string,
-        carTypes: string[]) {
-        return this.http.post<Post[]>("/api/posts", {
+        carTypes: string[]): Observable<Page> {
+        return this.http.post<Page>(`/api/posts?page=${page}&size=10`, {
             isNew: isNew,
             manufacturer: manufacturer == '' ? null : manufacturer,
             model: model == '' ? null : model,
@@ -37,6 +40,7 @@ export class PostService {
             yearTo: yearTo == '' ? null : yearTo,
             priceFrom: priceFrom == '' ? null : priceFrom,
             priceTo: priceTo == '' ? null : priceTo,
+            mileageBelow: mileageBellow == '' ? null : mileageBellow,
             color: color == '' ? null : color,
             sortBy: sortBy == '' ? null : sortBy,
             carTypes: carTypes.length == 0 ? null : carTypes
@@ -69,6 +73,9 @@ export class PostService {
 
     getCarTypes(): Observable<string[]> {
         return this.http.get<string[]>('/api/posts/carTypes');
-        // return of(['asd', 'dasd'])
+    }
+
+    editPrice(postId: number, price: number): Observable<Message> {
+        return this.http.post<Message>(`/api/user/edit/price/${postId}`, price)
     }
 }

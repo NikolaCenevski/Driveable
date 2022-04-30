@@ -1,0 +1,23 @@
+mat-card {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  height: 230px;
+}
+
+mat-form-field {
+  display: block;
+}
+
+.title-image {
+  margin: 30px;
+}
+
+.container {
+  width: 100%;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+}

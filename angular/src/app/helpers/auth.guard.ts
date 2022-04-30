@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.tokenStorageService.getUser();
     if (currentUser) {
-      if (route.data && route.data !== currentUser.role) {
+      if (route.data['role'] && route.data['role'] !== currentUser.userRole) {
         this.router.navigate(['/']);
         return false;
       }

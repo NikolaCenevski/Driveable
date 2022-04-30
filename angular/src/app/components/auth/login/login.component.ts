@@ -46,7 +46,13 @@ export class LoginComponent implements OnInit {
             next: (data) => {
                 this.tokenStorage.saveToken(data.token);
                 this.tokenStorage.saveUser(JSON.stringify(data));
-                this.router.navigate(['/']);
+                console.log(data.userRole)
+                if(data.userRole == 'MODERATOR') {
+                console.log(data.userRole)
+                    this.router.navigate(['moderator/posts']);
+                } else {
+                    this.router.navigate(['/']);
+                }
             },
             error: () => {
                 this.messageService.showErrorMessage("Incorrect username or password");

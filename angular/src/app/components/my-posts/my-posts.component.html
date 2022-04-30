@@ -1,0 +1,19 @@
+<mat-card *ngFor="let post of posts;">
+  <div class="title-image">
+    <img mat-card-xl-image [src]="images.get(post.id)" alt="car">
+  </div>
+  <div class="container">
+    <div class="top">
+      <p>{{post.isNew ? 'New' : 'Used'}}</p>
+      <p>{{post.date}}</p>
+    </div>
+    <mat-card-title>{{post.title}}</mat-card-title>
+    <mat-card-subtitle>{{post.price}} eur</mat-card-subtitle>
+    <p>Year: {{post.manufacturingYear}}</p>
+    <p>Mileage: {{post.mileage}}</p>
+    <p></p>
+    <p>Horse power: {{post.horsepower}}</p>
+    <a mat-raised-button color="primary" [routerLink]="['/post', post.id]" style="margin-right: 5px">Open</a>
+    <button mat-raised-button color="primary" (click)="openEditPriceDialog(post.id)">Change price</button>
+  </div>
+</mat-card>
