@@ -40,6 +40,7 @@ public class ReportPostService {
         ReportPostResponse reportPostResponse = new ReportPostResponse();
         Post post = reportPost.getPost();
         reportPostResponse.setId(reportPost.getId());
+        reportPostResponse.setPostId(post.getId());
         reportPostResponse.setCar(post.getCar());
         reportPostResponse.setColor(post.getColor());
         reportPostResponse.setMileage(post.getMileage());

@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ReportPostResponse implements Response {
     private long id;
+    private long postId;
     private String title;
     private String description;
     private int horsepower;
