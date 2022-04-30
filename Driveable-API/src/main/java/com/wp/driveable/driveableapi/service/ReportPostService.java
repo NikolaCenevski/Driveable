@@ -9,6 +9,7 @@ import com.wp.driveable.driveableapi.exceptions.NotFoundException;
 import com.wp.driveable.driveableapi.repository.PostRepository;
 import com.wp.driveable.driveableapi.repository.ReasonRepository;
 import com.wp.driveable.driveableapi.repository.ReportPostRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +31,13 @@ public class ReportPostService {
     }
 
     public ReportPostResponse getReportPostById(long id) throws NotFoundException {
-        ReportPost reportPost = reportPostRepository.findById(id)
+        Post post=postRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Report post not found"));
-
+        ReportPost reportPost = reportPostRepository.findByPost(post);
+        if (reportPost==null)
+        {
+            throw new NotFoundException("Report post not found");
+        }
         return mapToReportPostResponse(reportPost);
     }
 
