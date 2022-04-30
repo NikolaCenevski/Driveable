@@ -45,9 +45,23 @@
         </mat-form-field>
       </div>
       <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Mileage bellow</mat-label>
+          <input formControlName="mileageBellow" matInput type="number"/>
+        </mat-form-field>
+      </div>
+      <div>
         <mat-form-field appearance="fill" style="display: block">
           <mat-label>Color</mat-label>
           <input formControlName="color" matInput type="text"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Car type</mat-label>
+          <mat-select formControlName="carTypes" multiple>
+            <mat-option *ngFor="let carType of carTypes" [value]="carType">{{carType}}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div>
@@ -60,14 +74,6 @@
             <mat-option [value]="'price'">
               Price
             </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="fill">
-          <mat-label>Car type</mat-label>
-          <mat-select formControlName="carTypes" multiple>
-            <mat-option *ngFor="let carType of carTypes" [value]="carType">{{carType}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -95,10 +101,10 @@
         </div>
       </mat-card>
     </div>
-    <mat-paginator [length]="100"
-                   [pageSize]="10"
-                   [pageSizeOptions]="[5, 10, 25, 100]"
-                   aria-label="Select page">
+    <mat-paginator [length]="length"
+                   [pageIndex]="pageIndex"
+                   [pageSize]="pageSize"
+                   (page)="onPageEvent($event)">
     </mat-paginator>
   </mat-drawer-content>
 </mat-drawer-container>

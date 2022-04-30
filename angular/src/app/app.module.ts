@@ -34,6 +34,11 @@ import { ReportDialogComponent } from './components/post/report-dialog/report-di
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatSelectModule} from "@angular/material/select";
+import { EditProfileDialogComponent } from './components/header/edit-profile-dialog/edit-profile-dialog.component';
+import { MyPostsComponent } from './components/my-posts/my-posts.component';
+import { EditPriceDialogComponent } from './components/my-posts/edit-price-dialog/edit-price-dialog.component';
+import { ModeratorPostsComponent } from './components/moderator-posts/moderator-posts.component';
+import { ModeratorPostComponent } from './components/moderator-post/moderator-post.component';
 
 @NgModule({
     declarations: [
@@ -46,6 +51,11 @@ import {MatSelectModule} from "@angular/material/select";
         CreatePostDialogComponent,
         PostComponent,
         ReportDialogComponent,
+        EditProfileDialogComponent,
+        MyPostsComponent,
+        EditPriceDialogComponent,
+        ModeratorPostsComponent,
+        ModeratorPostComponent,
     ],
     imports: [
         AppRoutingModule,

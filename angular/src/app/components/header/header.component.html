@@ -1,7 +1,11 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <a routerLink="posts" style="color: white">
+    <a *ngIf="!isLoggedIn() || tokenStorageService.getUser()?.userRole == 'USER'" [routerLink]="['/posts', 0]" style="color: white">
 <!--      <img src="assets/delivery.png" class="logo">-->
+      Deliverable
+    </a>
+    <a *ngIf="tokenStorageService.getUser()?.userRole == 'MODERATOR'" [routerLink]="['/moderator/posts']" style="color: white">
+      <!--      <img src="assets/delivery.png" class="logo">-->
       Deliverable
     </a>
 
@@ -20,7 +24,7 @@
       </mat-chip-list>
 
       <mat-chip-list *ngIf="isLoggedIn()">
-        <a (click)="openCreatPostDialog()">
+        <a *ngIf="tokenStorageService.getUser()?.userRole == 'USER'" (click)="openCreatPostDialog()">
           <mat-chip color="accent" selected>
             Create post
           </mat-chip>
@@ -30,6 +34,14 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
+          <button *ngIf="tokenStorageService.getUser()?.userRole == 'USER'" mat-menu-item (click)="openEditProfileDialog()">
+            <mat-icon>person</mat-icon>
+            <span>Edit profile</span>
+          </button>
+          <a *ngIf="tokenStorageService.getUser()?.userRole == 'USER'" routerLink="myPosts" mat-menu-item>
+            <mat-icon>library_books</mat-icon>
+            <span>Your posts</span>
+          </a>
           <button mat-menu-item (click)="signOut()">
             <mat-icon>exit_to_app</mat-icon>
             <span>Log out</span>

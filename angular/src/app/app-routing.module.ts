@@ -5,6 +5,10 @@ import {LoginComponent} from "./components/auth/login/login.component";
 import {RegisterComponent} from "./components/auth/register/register.component";
 import {PostsComponent} from "./components/posts/posts.component";
 import {PostComponent} from "./components/post/post.component";
+import {MyPostsComponent} from "./components/my-posts/my-posts.component";
+import {ModeratorPostsComponent} from "./components/moderator-posts/moderator-posts.component";
+import {ModeratorPostComponent} from "./components/moderator-post/moderator-post.component";
+import {AuthGuard} from "./helpers/auth.guard";
 
 const routes: Routes = [
     {
@@ -24,7 +28,7 @@ const routes: Routes = [
 
     },
     {
-        path: 'posts',
+        path: 'posts/:page',
         component: PostsComponent
     },
     {
@@ -32,8 +36,24 @@ const routes: Routes = [
         component: PostComponent
     },
     {
+        path: 'myPosts',
+        component: MyPostsComponent
+    },
+    {
+        path: 'moderator/posts',
+        component: ModeratorPostsComponent,
+        canActivate: [AuthGuard],
+        data: {role: 'MODERATOR'}
+    },
+    {
+        path: 'moderator/posts/:id',
+        component: ModeratorPostComponent,
+        canActivate: [AuthGuard],
+        data: {role: 'MODERATOR'}
+    },
+    {
         path: '**',
-        redirectTo: '/posts'
+        redirectTo: '/posts/0'
     }
 ]
 

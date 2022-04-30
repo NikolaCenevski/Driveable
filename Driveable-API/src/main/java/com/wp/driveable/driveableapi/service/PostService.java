@@ -17,10 +17,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,10 +47,7 @@ public class PostService {
     }
 
     public Page<PostResponse> getAllPosts(GetPostsRequest getPostsRequest, Pageable pageable) {
-        if (getPostsRequest.getSortBy() != null) {
 
-        }
-        //sortby here
         List<Post> posts = postRepository.findAll();
         List<Post> newPosts = new ArrayList<>();
 
@@ -94,6 +93,17 @@ public class PostService {
         {
             posts=posts.stream().filter(r->r.getMileage()<=getPostsRequest.getMileageBelow()).collect(Collectors.toList());
         }
+
+        if (getPostsRequest.getSortBy() != null) {
+            if(getPostsRequest.getSortBy().equals("date")) {
+                posts.sort(Comparator.comparing(Post::getDate).reversed());
+            }
+            if(getPostsRequest.getSortBy().equals("price")) {
+                posts.sort(Comparator.comparing(Post::getPrice));
+            }
+        }
+        //sortby here
+
         List<PostResponse> postResponse=posts.stream().map(this::mapToPostResponse).collect(Collectors.toList());
         int start=pageable.getPageNumber()*pageable.getPageSize();
         int end = Math.min(start + pageable.getPageSize(), posts.size());
