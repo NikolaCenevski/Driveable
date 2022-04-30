@@ -11,6 +11,8 @@ import com.wp.driveable.driveableapi.service.CarService;
 import com.wp.driveable.driveableapi.service.CarTypeService;
 import com.wp.driveable.driveableapi.service.PostService;
 import com.wp.driveable.driveableapi.service.ReportPostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,8 +41,8 @@ public class PostController {
         return postService.getAllPosts();
     }
     @PostMapping
-    public List<PostResponse> getAllPosts(@RequestBody GetPostsRequest getPostsRequest) {
-        return postService.getAllPosts(getPostsRequest);
+    public Page<PostResponse> getAllPosts(@RequestBody GetPostsRequest getPostsRequest, Pageable pageable) {
+        return postService.getAllPosts(getPostsRequest,pageable);
     }
 
     @GetMapping("/user/{id}")

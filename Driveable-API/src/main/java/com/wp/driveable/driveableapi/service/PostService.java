@@ -13,6 +13,9 @@ import com.wp.driveable.driveableapi.exceptions.NotFoundException;
 import com.wp.driveable.driveableapi.repository.CarTypeRepository;
 import com.wp.driveable.driveableapi.repository.PostRepository;
 import com.wp.driveable.driveableapi.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +44,7 @@ public class PostService {
         return postRepository.findAll().stream().map(this::mapToPostResponse).collect(Collectors.toList());
     }
 
-    public List<PostResponse> getAllPosts(GetPostsRequest getPostsRequest) {
+    public Page<PostResponse> getAllPosts(GetPostsRequest getPostsRequest, Pageable pageable) {
         if (getPostsRequest.getSortBy() != null) {
 
         }
@@ -91,7 +94,14 @@ public class PostService {
         {
             posts=posts.stream().filter(r->r.getMileage()<=getPostsRequest.getMileageBelow()).collect(Collectors.toList());
         }
-        return posts.stream().map(this::mapToPostResponse).collect(Collectors.toList());
+        List<PostResponse> postResponse=posts.stream().map(this::mapToPostResponse).collect(Collectors.toList());
+        int start=pageable.getPageNumber()*pageable.getPageSize();
+        int end = Math.min(start + pageable.getPageSize(), posts.size());
+        if (start<end)
+        {
+            return new PageImpl<PostResponse>(postResponse.subList(start,end),pageable,postResponse.size());
+        }
+        return new PageImpl<>(new ArrayList<>(),pageable,postResponse.size());
     }
 
     public MessageResponse createPost(PostRequest postRequest) {
